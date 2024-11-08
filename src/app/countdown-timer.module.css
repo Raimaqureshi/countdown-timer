@@ -6,55 +6,54 @@
 }
 
 .timerBox {
-  border: 2px solid black; /* Border color */
-  border-radius: 8px; /* Rounded corners */
+  border: 2px solid rgb(209, 140, 13); 
+  border-radius: 8px; 
   padding: 20px;
-  background-color: black; /* Light background color */
+  background-color: rgb(209, 140, 13);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
 .heading {
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-size: 28px;
+  margin-bottom: 20px;
   color: white;
+  font-weight: bold;
 }
 
 .input {
-  width: 100%; /* Full width */
-  padding: 10px; /* Padding inside the input */
-  margin-bottom: 20px; /* Space below the input */
-  border: 1px solid black; /* Border color */
-  border-radius: 4px; /* Rounded corners */
-  font-size: 16px; /* Font size */
-  transition: border 0.3s; /* Transition effect for border */
+  width: 100%; 
+  padding: 10px; 
+  margin-bottom: 20px; 
+  border: 1px solid black; 
+  border-radius: 4px;
+  font-size: 18px;
 }
 
 .input:focus {
-  border-color: #0070f3; /* Border color on focus */
-  outline: none; /* Remove default outline */
+  border-color: #0070f3;
+  outline: none; 
 }
 
 .timerDisplay {
-  font-size: 32px; /* Larger font size for timer display */
-  margin-bottom: 20px; /* Space below the timer display */
+  font-size: 39px;
+  margin-bottom: 20px; 
   color: white;
 }
 
 .buttonContainer {
   display: flex;
-  gap: 10px; /* Space between buttons */
+  gap: 10px; 
 }
 
 .button {
-  padding: 10px 20px; /* Padding inside buttons */
-  background-color: #0070f3; /* Button background color */
-  color: white; /* Button text color */
-  border: none; /* Remove default border */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s; /* Transition effect for background color */
+  padding: 10px 20px; 
+  background-color: black; 
+  color: white; 
+  border: none; 
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .button:hover {
-  background-color: #005bb5; /* Darker shade on hover */
+  background-color: #03182c; 
 }
