@@ -1,6 +1,5 @@
 "use client";  // Add this line at the top
 import { useEffect, useState } from 'react';
-import styles from './countdown-timer.module.css'; // Make sure this path is correct
 
 interface CountdownTimerProps {
   initialMinutes?: number;
@@ -18,7 +17,7 @@ const CountdownTimer = ({
   const [inputMinutes, setInputMinutes] = useState<number>(0);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout; // Explicitly typing the interval
+    let interval: NodeJS.Timeout;
 
     if (isActive && !isPaused) {
       interval = setInterval(() => {
@@ -35,7 +34,7 @@ const CountdownTimer = ({
       }, 1000);
     }
 
-    return () => clearInterval(interval); // Clean up the interval
+    return () => clearInterval(interval);
   }, [seconds, minutes, isActive, isPaused]);
 
   const startTimer = () => {
@@ -57,43 +56,30 @@ const CountdownTimer = ({
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.timerBox}>
-        <h1 className={styles.heading}>Countdown Timer</h1>
-        
-        {/* User input for setting time */}
-        <input
-          type="number"
-          value={inputMinutes}
-          onChange={(e) => setInputMinutes(Number(e.target.value))}
-          placeholder="Set time in minutes"
-          className={styles.input}
-        />
-        
-        <div className={styles.timerDisplay}>
-          {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-        </div>
-        <div className={styles.buttonContainer}>
-          {!isActive && isPaused && (
-            <button onClick={startTimer} className={styles.button}>
-              Start
-            </button>
-          )}
-          {isActive && !isPaused && (
-            <button onClick={pauseTimer} className={styles.button}>
-              Pause
-            </button>
-          )}
-          <button onClick={resetTimer} className={styles.button}>
-            Reset
-          </button>
-        </div>
+    <div>
+      <h1>Countdown Timer</h1>
+      <input
+        type="number"
+        value={inputMinutes}
+        onChange={(e) => setInputMinutes(Number(e.target.value))}
+        placeholder="Set time in minutes"
+      />
+      <div>
+        {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+      </div>
+      <div>
+        {!isActive && isPaused && (
+          <button onClick={startTimer}>Start</button>
+        )}
+        {isActive && !isPaused && (
+          <button onClick={pauseTimer}>Pause</button>
+        )}
+        <button onClick={resetTimer}>Reset</button>
       </div>
     </div>
   );
 };
 
-export default CountdownTimer;
-
-// Usage example
-// You can now use <CountdownTimer /> in your layout or another component.
+export default function Page() {
+    return <CountdownTimer initialMinutes={10} />;
+}
