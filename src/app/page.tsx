@@ -1,101 +1,99 @@
-import Image from "next/image";
+"use client";  // Add this line at the top
+import { useEffect, useState } from 'react';
+import styles from './countdown-timer.module.css'; // Make sure this path is correct
 
-export default function Home() {
+interface CountdownTimerProps {
+  initialMinutes?: number;
+  initialSeconds?: number;
+}
+
+const CountdownTimer = ({
+  initialMinutes = 0,
+  initialSeconds = 0,
+}: CountdownTimerProps) => {
+  const [seconds, setSeconds] = useState(initialSeconds);
+  const [minutes, setMinutes] = useState(initialMinutes);
+  const [isActive, setIsActive] = useState(false);
+  const [isPaused, setIsPaused] = useState(true);
+  const [inputMinutes, setInputMinutes] = useState<number>(0);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout; // Explicitly typing the interval
+
+    if (isActive && !isPaused) {
+      interval = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
+        } else if (seconds === 0) {
+          if (minutes === 0) {
+            clearInterval(interval);
+          } else {
+            setMinutes(minutes - 1);
+            setSeconds(59);
+          }
+        }
+      }, 1000);
+    }
+
+    return () => clearInterval(interval); // Clean up the interval
+  }, [seconds, minutes, isActive, isPaused]);
+
+  const startTimer = () => {
+    setMinutes(inputMinutes);
+    setSeconds(0);
+    setIsActive(true);
+    setIsPaused(false);
+  };
+
+  const pauseTimer = () => {
+    setIsPaused(true);
+  };
+
+  const resetTimer = () => {
+    setIsActive(false);
+    setIsPaused(true);
+    setSeconds(initialSeconds);
+    setMinutes(initialMinutes);
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <div className={styles.container}>
+      <div className={styles.timerBox}>
+        <h1 className={styles.heading}>Countdown Timer</h1>
+        
+        {/* User input for setting time */}
+        <input
+          type="number"
+          value={inputMinutes}
+          onChange={(e) => setInputMinutes(Number(e.target.value))}
+          placeholder="Set time in minutes"
+          className={styles.input}
         />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        
+        <div className={styles.timerDisplay}>
+          {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className={styles.buttonContainer}>
+          {!isActive && isPaused && (
+            <button onClick={startTimer} className={styles.button}>
+              Start
+            </button>
+          )}
+          {isActive && !isPaused && (
+            <button onClick={pauseTimer} className={styles.button}>
+              Pause
+            </button>
+          )}
+          <button onClick={resetTimer} className={styles.button}>
+            Reset
+          </button>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default CountdownTimer;
+
+// Usage example
+// You can now use <CountdownTimer /> in your layout or another component.
