@@ -6,10 +6,10 @@
 }
 
 .timerBox {
-  border: 2px solid rgb(209, 140, 13); 
+  border: 2px solid rgb(205, 177, 125); 
   border-radius: 8px; 
   padding: 20px;
-  background-color: rgb(209, 140, 13);
+  background-color: rgb(205, 177, 125);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
