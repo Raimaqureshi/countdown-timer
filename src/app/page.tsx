@@ -18,7 +18,7 @@ const CountdownTimer = ({
   const [inputMinutes, setInputMinutes] = useState<number>(0);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout; // Explicitly typing the interval
+    let interval: ReturnType<typeof setInterval>; 
 
     if (isActive && !isPaused) {
       interval = setInterval(() => {
